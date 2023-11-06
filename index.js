@@ -15,12 +15,13 @@ const laptopData = JSON.parse(json);
 // contient une call back qui va être déclenchée chaque fois que quelqu'un accèdera au web serveur
 const server = http.createServer((req, res) => {
   const pathName = url.parse(req.url, true).pathname;
+  const id = url.parse(req.url, true).query.id;
   if (pathName === '/products' || pathName === '/') {
     res.writeHead(200, { 'content-type': 'text/html' });
     res.end('this is the products page');
-  } else if (pathName === '/laptop') {
+  } else if (pathName === '/laptop' && id < laptopData.length) {
     res.writeHead(200, { 'Content-type': 'text/html' });
-    res.end('this is th laptop page');
+    res.end(`this is the laptop page for the laptop ${id}`);
   } else {
     res.writeHead(404, { 'Content-type': 'text/html' });
     res.end('URL was not found on the server');
